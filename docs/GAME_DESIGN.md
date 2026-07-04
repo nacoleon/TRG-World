@@ -66,8 +66,10 @@ Enter region cave  →  Explore  →  Mine crystals  →  Battle monsters
 - **Mining:** interact with crystal nodes → collect crystals → convert to Runes.
 - **Combat:** monster AI, player attacks, damage/health, death & respawn.
 - **Progression:** boss gate per region; unlock next region on victory.
-- **Economy:** Crystals → TRG Runes → upgrades/cosmetics. **[TODO]** scope for v1.
-- **[TODO]** Any blockchain / real TRG integration, or purely in-game for now?
+- **Economy:** Crystals → TRG Runes → upgrades/cosmetics.
+  **v1 decision: fully simulated in-game** — no blockchain / real TRG token
+  integration yet. Crystals and Runes are just in-game counters for now; real
+  TRG economy integration is a possible later phase.
 
 ## 8. First milestone — the "vertical slice"
 
@@ -88,5 +90,6 @@ this proven core.
 - Canonical **art style & palette** — can you share reference images/models?
 - Is combat **melee, ranged, or both**?
 - **First-person or third-person** camera? (Currently planning third-person.)
-- Should v1 wire into the **real TRG token economy**, or simulate it in-game?
 - How many **regions** for the first release?
+
+**Resolved:** Economy is **simulated in-game** for v1 (no blockchain yet).

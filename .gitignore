@@ -1,0 +1,64 @@
+# ============================================================
+# Unreal Engine 5 .gitignore
+# Ignore engine-generated files; keep source, config & assets.
+# ============================================================
+
+# Generated / transient directories
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+Script/
+Platforms/*/Binaries/
+Platforms/*/Intermediate/
+
+# Ignore build artifacts inside plugins too
+Plugins/**/Binaries/
+Plugins/**/Intermediate/
+
+# Compiled source
+*.o
+*.obj
+*.pch
+*.dll
+*.dylib
+*.so
+*.lib
+*.a
+*.exp
+*.pdb
+
+# IDE / editor project files (regenerated from .uproject)
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+.vs/
+.vscode/
+.idea/
+*.VC.db
+*.VC.opendb
+*.sdf
+*.opensdf
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Crash reports & logs
+*.log
+*.tmp
+
+# Python (Unreal MCP server / editor scripting)
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# ============================================================
+# Do NOT ignore these — they are your project source of truth:
+#   *.uproject, /Config, /Content, /Source, /Plugins (source only)
+# ============================================================

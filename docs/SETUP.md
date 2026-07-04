@@ -72,37 +72,78 @@ Most Unreal MCP servers control the editor through Python.
 
 ## Step 6 — Install the Unreal MCP
 
-> Pick one community project and follow *its* README exactly — versions and
-> steps change. Popular ones: `chongdashu/unreal-mcp`, `flopperam/unreal-mcp`.
+**Chosen project: [`chongdashu/unreal-mcp`](https://github.com/chongdashu/unreal-mcp)**
+— free, fully local, uses a C++ plugin built with Visual Studio.
 
-General shape of the install:
+> Requirements: **Unreal Engine 5.5+**, **Python 3.12+**, Visual Studio 2022
+> with *Game development with C++*. Always cross-check the project's own README,
+> since steps can change.
 
-1. Install **Python 3.11+** and **uv** (`pip install uv`) or use the project's
-   recommended package manager.
-2. Clone the MCP project.
-3. Copy its **Unreal plugin** into `TRGWorld/Plugins/`.
-4. Restart the editor and **enable the plugin** (Edit → Plugins).
-5. Start the **Python MCP server** as the README describes.
+### 6a. Install Python 3.12+ and `uv`
+
+1. Install **Python 3.12+** from <https://www.python.org/downloads/> —
+   during install, tick **"Add python.exe to PATH"**.
+2. Install **uv** (fast Python package manager):
+   ```powershell
+   pip install uv
+   ```
+
+### 6b. Get the MCP project
+
+- Download the repo as a ZIP from
+  <https://github.com/chongdashu/unreal-mcp> (green **Code** button →
+  **Download ZIP**) and unzip it somewhere memorable, e.g.
+  `C:\Dev\unreal-mcp\`. *(Or `git clone` it if you have Git.)*
+
+### 6c. Add the UnrealMCP plugin to your project
+
+1. Copy the folder `unreal-mcp\MCPGameProject\Plugins\UnrealMCP` into your
+   project's `TRGWorld\Plugins\` folder (create `Plugins` if it doesn't exist).
+2. **Close the Unreal Editor.**
+
+### 6d. Build the plugin (turns the project into a C++ project)
+
+1. In `TRGWorld\`, **right-click `TRGWorld.uproject` → Generate Visual Studio
+   project files**. (If you don't see that option, see Troubleshooting.)
+2. Double-click the generated **`TRGWorld.sln`** to open Visual Studio 2022.
+3. Set the config dropdown to **Development Editor** / **Win64**.
+4. **Build → Build Solution** (or press **F7**). Wait for "Build succeeded".
+
+### 6e. Enable the plugin
+
+1. Reopen the project (double-click `TRGWorld.uproject`).
+2. **Edit → Plugins**, search **UnrealMCP**, tick ✅ **enable**, restart.
+
+### 6f. Set up the Python MCP server
+
+1. Open a terminal in the project's **`Python`** folder
+   (`unreal-mcp\Python\`).
+2. Install deps (see that folder's `README.md`), typically:
+   ```powershell
+   uv sync
+   ```
+3. This is the server Claude Desktop will launch (next step).
 
 ## Step 7 — Install & configure Claude Desktop
 
 1. Install **Claude Desktop** from <https://claude.ai/download>.
 2. Open **Settings → Developer → Edit Config** (this opens
    `claude_desktop_config.json`).
-3. Add the MCP server entry using the command from the project's README, e.g.:
+3. Add the MCP server entry (point `--directory` at your unzipped
+   `unreal-mcp\Python` folder, using **double backslashes**):
 
    ```json
    {
      "mcpServers": {
-       "unreal": {
+       "unrealMCP": {
          "command": "uv",
-         "args": ["--directory", "C:\\path\\to\\unreal-mcp\\Python", "run", "unreal_mcp_server.py"]
+         "args": ["--directory", "C:\\Dev\\unreal-mcp\\Python", "run", "unreal_mcp_server.py"]
        }
      }
    }
    ```
 
-   *(Exact command/args come from the MCP project you chose.)*
+   *(Adjust the path to wherever you unzipped it.)*
 4. Fully quit and reopen Claude Desktop. The `unreal` tools should now appear.
 
 ## Step 8 — Test the connection

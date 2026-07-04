@@ -14,6 +14,34 @@ the exit and progress to the next region.
 **One-liner:** *Mine crystals, fight through the caves, beat the boss, escape —
 one region at a time.*
 
+## 1a. Target platforms — MOBILE-FIRST (iOS/iPadOS)
+
+**Primary target: iPhone and iPad.** This is a core constraint, not an
+afterthought — it shapes controls, art, and performance from day one.
+
+- **Controls:** touch only — on-screen virtual joystick (move) + buttons
+  (jump / mine / attack). No keyboard or mouse on the device. We add an
+  on-screen touch UI and keep desktop keys only for fast PC testing.
+- **Rendering:** use UE5's **Mobile renderer**. Avoid the heavy desktop
+  features that tank mobile framerate: **Nanite off, Lumen off, hardware
+  ray tracing off**. Prefer **baked/static lighting**, low draw calls, and
+  modest poly/texture budgets.
+- **Project settings (set early):** target hardware = **Mobile / Scalable**;
+  enable iOS as a platform; test with the **Mobile preview** rendering level
+  in-editor so PC previews match phone/tablet reality.
+- **UI:** design for a range of screen sizes and aspect ratios; respect
+  **safe areas** (notch / Dynamic Island / home indicator).
+- **Performance budget:** aim for a smooth **30–60 FPS** on a mid-range iPhone.
+  Test on real hardware regularly — the editor lies about mobile perf.
+
+### Shipping to iOS (the hard requirements)
+
+- A **Mac** is required to compile and package iOS builds (Xcode).
+- An **Apple Developer Program** membership (~$99/yr) to install on devices
+  and publish to **TestFlight** / the **App Store**.
+- Workflow: prototype on PC with the MCP → periodically package for iOS →
+  test on a real iPhone/iPad via TestFlight.
+
 ## 2. Source IP (from public info — confirm & expand)
 
 - **The Rune Guardians (TRG):** 10k PFP NFT collection on Bitcoin / Runes.
@@ -77,10 +105,13 @@ Smallest playable thing that proves the loop, built on the **Third Person**
 template:
 
 1. A single small cave level (Region 1 prototype).
-2. Crystal nodes the player can walk up to and **mine** (spawns/awards a crystal).
-3. One monster type that chases and can be defeated.
-4. A simple **boss** at the end.
-5. An **exit** that "completes" the region when the boss is down.
+2. **Touch controls** — on-screen joystick + jump/mine/attack buttons, so it's
+   playable on a phone/tablet from the start (keyboard kept only for PC testing).
+3. Crystal nodes the player can walk up to and **mine** (spawns/awards a crystal).
+4. One monster type that chases and can be defeated.
+5. A simple **boss** at the end.
+6. An **exit** that "completes" the region when the boss is down.
+7. Verify it **packages and runs on a real iPhone/iPad** at an acceptable framerate.
 
 Everything after that (extra regions, real art, economy, UI polish) builds on
 this proven core.

@@ -31,12 +31,16 @@ Plugins/**/Intermediate/
 
 # IDE / editor project files (regenerated from .uproject)
 *.sln
+*.slnx
 *.suo
 *.xcodeproj
 *.xcworkspace
 .vs/
 .vscode/
 .idea/
+
+# Claude Code — machine-local settings (shared config would be .claude/settings.json)
+.claude/settings.local.json
 *.VC.db
 *.VC.opendb
 *.sdf

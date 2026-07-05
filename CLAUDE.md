@@ -39,20 +39,25 @@ design doc.
 
 - **Unreal project**: `C:\Users\nacoleon\Documents\Unreal Projects\TRG-World\TRGWorld\`
   (contains `TRGWorld.uproject`, now a **C++** project)
-- **This git repo** (`nacoleon/trg-world`): currently holds docs/scripts only —
-  see "Repo vs. project location" below.
-- Old community MCP (being retired): `C:\Users\nacoleon\Dev\unreal-mcp-main\`
+- **This git repo** (`nacoleon/trg-world`): the project folder above **is** the
+  repo root (consolidated 2026-07-04; Git LFS enabled for binary assets).
+- Removed community MCP plugin (parked, reversible):
+  `C:\Users\nacoleon\Documents\Unreal Projects\TRG-World\_removed-plugins\UnrealMCP\`
 
 ## MCP setup (official Epic plugin)
 
-- Enable **Edit → Plugins → "Unreal MCP" (Experimental, Epic Games)**; it pulls
-  in the **Toolset Registry** plugin. Restart the editor.
-- The server auto-starts inside the running editor at
+- Already enabled in `TRGWorld.uproject` (`ModelContextProtocol`); it pulls in
+  the **Toolset Registry** + **Engine Asset Definitions** plugins. To toggle by
+  hand instead: **Edit → Plugins → "Unreal MCP" (Experimental, Epic Games)**,
+  then restart the editor.
+- Auto-start is enabled (`Config/DefaultEditorPerProjectUserSettings.ini` →
+  `bAutoStartServer=True`), so the server comes up inside the running editor at
   **`http://127.0.0.1:8000/mcp`** (localhost only, no auth — that's expected).
-- Connect Claude Code (run with the editor open):
+- Claude Code is wired via the committed project-scoped **`.mcp.json`** at the
+  repo root (server name `unreal-mcp`). Reload Claude Code with the editor open,
+  and approve the server on first use. Alternative user-scope registration:
   ```powershell
   claude mcp add --transport http --scope user unreal http://127.0.0.1:8000/mcp
-  claude mcp list      # expect: unreal ... ✓ Connected
   ```
 - In a `claude` session: "Use the unreal server to list the actors in my level."
   Tools include spawn actors, lighting, materials, UI inspection, automation.
@@ -66,24 +71,25 @@ design doc.
 - [x] TRGWorld project created (Third Person, Blueprint → converted to C++)
 - [x] Repo scaffolded: `.gitignore`, README, `docs/`, `scripts/`
 - [x] Game Design Doc drafted; mobile-first + simulated-economy decisions locked
-- [~] **Switching to the official Epic Unreal MCP plugin + Claude Code** (in progress)
-- [ ] Confirm MCP end-to-end (list actors / spawn a cube)
+- [x] **Switched to the official Epic Unreal MCP plugin** — community plugin
+      removed, `ModelContextProtocol` enabled, `.mcp.json` + auto-start configured
+- [x] Repo consolidated: the project folder is now the repo root, Git LFS enabled
+- [ ] Confirm MCP end-to-end (list actors / spawn a cube) — needs editor restart + Claude Code reload
 - [ ] Set project to Mobile/Scalable + add touch controls
 - [ ] Build the **vertical slice**: 1 cave, mineable crystal, 1 monster, a boss,
       an exit (see GAME_DESIGN.md §8)
 
-## Repo vs. project location (needs reconciling)
+## Repo vs. project location (RESOLVED 2026-07-04)
 
-Right now the **git repo** and the **actual Unreal project** are in two
-different folders. To get the game under version control, consolidate them —
-recommended approach when starting in VS Code:
+Done. The folder containing `TRGWorld.uproject` **is** the git repo root now.
+The docs/scripts were merged into it (unrelated-histories merge) and the game
+(source + content) committed on top. **Git LFS** was added (`.gitattributes`) so
+`.uasset`/`.umap` and source art are stored out-of-band; the `.gitignore` keeps
+Binaries/Intermediate/Saved/DerivedDataCache out.
 
-1. Clone this repo, OR point git at the UE project folder.
-2. Make the folder containing `TRGWorld.uproject` the repo root (move the
-   `.gitignore`, `README.md`, `docs/`, `scripts/`, `CLAUDE.md` in, or move the
-   project files into the clone).
-3. Commit the project (the `.gitignore` already excludes Binaries/Intermediate/
-   Saved/DerivedDataCache so only real source/content is tracked).
+Note: if this becomes a team where several people edit content simultaneously,
+the professional move is to migrate to **Perforce** (exclusive checkout / file
+locking) — git cannot merge binary `.uasset`/`.umap` files.
 
 ## History / gotchas already solved
 
